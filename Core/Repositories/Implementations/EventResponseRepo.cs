@@ -36,7 +36,7 @@ namespace Core.Repositories.Implementations
             return entry.Entity;    
         }
 
-        public async Task DeleteASync(Guid eventId, Guid userId)
+        public async Task DeleteAsync(Guid eventId, Guid userId)
         {
             var response = await GetAsync(eventId, userId);
             if (response is not null) _context.EventResponses.Remove(response);

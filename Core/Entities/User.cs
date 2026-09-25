@@ -6,7 +6,7 @@ namespace Core.Entities
     {
         public Guid Id { get; set; }
 
-        public Guid ClubId { get; set; }
+        public Guid? ClubId { get; set; }
 
         public string Email { get; set; } = string.Empty;
 

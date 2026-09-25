@@ -9,7 +9,7 @@ namespace Core.Repositories.Interfaces
         Task<List<EventResponse>> GetByUserIdAsync(Guid userId);
         Task<EventResponse> AddAsync(EventResponse response);
         Task<EventResponse> UpdateAsync(EventResponse response);
-        Task DeleteASync(Guid eventId, Guid userId);
+        Task DeleteAsync(Guid eventId, Guid userId);
         Task SaveChangesAsync();
     }
 }

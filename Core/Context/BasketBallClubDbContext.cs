@@ -5,7 +5,7 @@ namespace Core.Context
 {
     public class BasketBallClubDbContext : DbContext
     {
-        public BasketBallClubDbContext(DbContextOptions options) : base(options)
+        public BasketBallClubDbContext(DbContextOptions<BasketBallClubDbContext> options) : base(options)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Core.Context
             modelBuilder.Entity<EventResponse>().HasOne<User>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
-            modelBuilder.Entity<User>().HasIndex(x => new { x.ExternalProvider, x.ExternalId }).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(x => new { x.ExternalProvider, x.ExternalId }).IsUnique().HasFilter("[ExternalProvider] IS NOT NULL AND [ExternalId] IS NOT NULL");
             modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Event>().HasOne<User>().WithMany().HasForeignKey(x => x.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.OpponentClubId).OnDelete(DeleteBehavior.NoAction);
