@@ -18,6 +18,7 @@ namespace Core.Context
             modelBuilder.Entity<EventResponse>().HasOne<Event>().WithMany().HasForeignKey(x => x.EventId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<EventResponse>().HasOne<User>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<User> Users => Set<User>();
