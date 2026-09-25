@@ -17,8 +17,12 @@ namespace Core.Context
             modelBuilder.Entity<EventResponse>().HasKey(x => new { x.EventId, x.UserId });
             modelBuilder.Entity<EventResponse>().HasOne<Event>().WithMany().HasForeignKey(x => x.EventId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<EventResponse>().HasOne<User>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(x => new { x.ExternalProvider, x.ExternalId }).IsUnique();
+            modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Event>().HasOne<User>().WithMany().HasForeignKey(x => x.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.OpponentClubId).OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<User> Users => Set<User>();
