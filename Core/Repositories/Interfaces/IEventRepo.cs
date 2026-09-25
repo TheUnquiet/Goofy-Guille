@@ -1,0 +1,9 @@
+using Core.Entities;
+
+namespace Core.Repositories.Interfaces
+{
+    public interface IEventRepo : IGenericRepo<Event>
+    {
+        Task<List<Event>> GetByClubIdAsync(Guid clubId);
+    }
+}
