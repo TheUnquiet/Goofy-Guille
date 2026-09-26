@@ -22,7 +22,7 @@ namespace Core.Repositories.Implementations
             return await dbSet.FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task<User?> GetByExtrernalLoginAsync(AuthenticationProvider provider, string externalId)
+        public async Task<User?> GetByExternalLoginAsync(AuthenticationProvider provider, string externalId)
         {
             return await dbSet.FirstOrDefaultAsync(x => x.ExternalProvider == provider && x.ExternalId == externalId);
         }

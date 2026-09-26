@@ -1,9 +1,7 @@
-using Core.Context;
-using Microsoft.EntityFrameworkCore;
+using API.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<BasketBallClubDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddModule<CoreModule>(builder.Configuration);
 builder.Services.AddControllers();
 var app = builder.Build();
 app.MapControllers();

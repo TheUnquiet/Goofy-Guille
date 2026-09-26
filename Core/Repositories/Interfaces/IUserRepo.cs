@@ -5,9 +5,8 @@ namespace Core.Repositories.Interfaces
 {
     public interface IUserRepo : IGenericRepo<User>
     {
-        Task<User?> GetByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
-        Task<User?> GetByExtrernalLoginAsync(AuthenticationProvider provider, string emailId);
+        Task<User?> GetByExternalLoginAsync(AuthenticationProvider provider, string emailId);
         Task<List<User>> GetByClubIdAsync(Guid clubId);
     }
 }
