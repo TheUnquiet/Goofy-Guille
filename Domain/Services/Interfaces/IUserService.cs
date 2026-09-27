@@ -1,4 +1,4 @@
-using Core.Entities;
+using Domain.Models;
 
 namespace Domain.Services.Interfaces
 {

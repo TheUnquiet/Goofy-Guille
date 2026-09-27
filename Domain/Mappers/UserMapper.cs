@@ -1,0 +1,32 @@
+﻿namespace Domain.Mappers
+{
+    public class UserMapper : 
+        IMapper<Core.Entities.User, Domain.Models.User>,
+        IMapper<Domain.Models.User, Core.Entities.User>
+    {
+        public Models.User Map(Core.Entities.User source)
+        {
+            var user = new Domain.Models.User();
+            user.SetId(source.Id);
+            user.ChangeEmail(source.Email);
+            user.ChangeDisplayName(source.DisplayName);
+
+            if (source.ClubId.HasValue) user.AssignToClub(source.ClubId.Value);
+            if (source.IsAdmin) user.PromoteToAdmin();
+            return user;
+        }
+
+        public Core.Entities.User Map(Models.User source)
+        {
+            return new Core.Entities.User
+            {
+                Id = source.Id,
+                Email = source.Email,
+                DisplayName = source.DisplayName,
+                ClubId = source.ClubId,
+                IsAdmin = source.IsAdmin
+            };
+
+        }
+    }
+}
