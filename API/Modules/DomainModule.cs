@@ -11,6 +11,9 @@ namespace API.Modules
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMapper<Core.Entities.User, Domain.Models.User>, UserMapper>();
             services.AddScoped<IMapper<Domain.Models.User, Core.Entities.User>, UserMapper>();
+            services.AddScoped<IClubService, ClubService>();
+            services.AddScoped<IMapper<Core.Entities.Club, Domain.Models.Club>, ClubMapper>();
+            services.AddScoped<IMapper<Domain.Models.Club, Core.Entities.Club>, ClubMapper>();
         }
     }
 }
