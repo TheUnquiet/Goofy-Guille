@@ -31,5 +31,7 @@ namespace Core.Context
         public DbSet<Event> Events => Set<Event>();
 
         public DbSet<EventResponse> EventResponses => Set<EventResponse>();
+
+        public DbSet<Location> Locations => Set<Location>();
     }
 }
