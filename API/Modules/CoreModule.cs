@@ -14,6 +14,7 @@ namespace API.Modules
             services.AddScoped<IClubRepo, ClubRepo>();
             services.AddScoped<IEventRepo, EventRepo>();
             services.AddScoped<IEventResponseRepo, EventResponseRepo>();
+            services.AddScoped<ILocationRepo, LocationRepo>();
         }
     }
 }

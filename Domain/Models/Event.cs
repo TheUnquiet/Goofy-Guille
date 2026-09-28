@@ -7,7 +7,7 @@ namespace Domain.Models
         public Guid CreatedByUserId { get; private set; }
         public EventType Type { get; private set; }
         public string? Description { get; private set; }
-        public Guid Location { get; private set; }
+        public Guid LocationId { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public Guid? OpponentClubId { get; private set; }
@@ -43,10 +43,10 @@ namespace Domain.Models
             Description = description;
         }
 
-        public void ChangeLocation(string location)
+        public void SetLocation(Guid locationId)
         {
-            if (string.IsNullOrWhiteSpace(location)) throw new ValidationException("Location is required");
-            Location = location;
+            if (locationId == Guid.Empty) throw new ValidationException("Location ID is required");
+            LocationId = locationId;
         }
 
         public void SetTime(DateTime startTime, DateTime endTime)
@@ -64,8 +64,7 @@ namespace Domain.Models
 
         public void SetOpponentClub(Guid? opponentClubId)
         {
-            if (opponentClubId == Guid.Empty) throw new ValidationException("Opponent club ID is invalid");
-            OpponentClubId = opponentClubId;
+            if (opponentClubId.HasValue) OpponentClubId = opponentClubId;
         }
 
         public void RemoveOpponentClubId()

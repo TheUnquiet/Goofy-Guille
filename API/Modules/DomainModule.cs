@@ -14,6 +14,9 @@ namespace API.Modules
             services.AddScoped<IClubService, ClubService>();
             services.AddScoped<IMapper<Core.Entities.Club, Domain.Models.Club>, ClubMapper>();
             services.AddScoped<IMapper<Domain.Models.Club, Core.Entities.Club>, ClubMapper>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IMapper<Core.Entities.Location, Domain.Models.Location>, LocationMapper>();
+            services.AddScoped<IMapper<Domain.Models.Location, Core.Entities.Location>, LocationMapper>();
         }
     }
 }
