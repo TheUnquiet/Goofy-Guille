@@ -61,11 +61,6 @@ namespace Domain.Services.Implementations
             return @event;
         }
 
-        public async Task ReqpondAsync(Guid eventId, Guid userId, EventResponseStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
         private async Task ValidateReferenceAsync(Models.Event @event)
         {
             if (await _clubRepo.GetByIdAsync(@event.ClubId) is null) throw new NotFoundException($"Club with ID {@event.ClubId} not found");

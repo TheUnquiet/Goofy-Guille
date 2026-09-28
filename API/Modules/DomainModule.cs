@@ -17,6 +17,9 @@ namespace API.Modules
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IMapper<Core.Entities.Location, Domain.Models.Location>, LocationMapper>();
             services.AddScoped<IMapper<Domain.Models.Location, Core.Entities.Location>, LocationMapper>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IMapper<Core.Entities.Event, Models.Event>, EventMapper>();
+            services.AddScoped<IMapper<Models.Event, Core.Entities.Event>, EventMapper>();
         }
     }
 }
