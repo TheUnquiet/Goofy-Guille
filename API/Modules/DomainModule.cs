@@ -20,6 +20,9 @@ namespace API.Modules
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IMapper<Core.Entities.Event, Models.Event>, EventMapper>();
             services.AddScoped<IMapper<Models.Event, Core.Entities.Event>, EventMapper>();
+            services.AddScoped<IEventResponseService, EventResponseService>();
+            services.AddScoped<IMapper<Core.Entities.EventResponse, Models.EventResponse>, EventResponseMapper>();
+            services.AddScoped<IMapper<Models.EventResponse, Core.Entities.EventResponse>, EventResponseMapper>();
         }
     }
 }
