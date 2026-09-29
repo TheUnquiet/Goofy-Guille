@@ -5,8 +5,8 @@ namespace Domain.Services.Implementations
         where TModel : class
     {
         private readonly IGenericRepo<TEntity> _repo;
-        private readonly IMapper<TEntity, TModel> _toDomainMapper;
-        private readonly IMapper<TModel, TEntity> _toEntityMapper;
+        protected readonly IMapper<TEntity, TModel> _toDomainMapper;
+        protected readonly IMapper<TModel, TEntity> _toEntityMapper;
 
         public GenericService(IGenericRepo<TEntity> repo, IMapper<TEntity, TModel> toDomainMapper, IMapper<TModel, TEntity> toEntityMapper)
         {
