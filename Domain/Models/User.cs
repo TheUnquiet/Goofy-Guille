@@ -8,6 +8,7 @@ namespace Domain.Models
         public string Email { get; private set; } = string.Empty;
         public string DisplayName { get; private set; } = string.Empty;
         public Guid? ClubId { get; private set; }
+        public Guid? TeamId { get; private set; }
         public bool IsAdmin { get; private set; }
 
         public void SetId(Guid id)
@@ -47,6 +48,20 @@ namespace Domain.Models
         public void DemoteFromAdmin()
         {
             IsAdmin = false;
+        }
+
+        public void AssignToTeam(Guid teamId)
+        {
+            if (teamId == Guid.Empty)
+            {
+                if (teamId == Guid.Empty) throw new ValidationException("Team ID is required");
+                TeamId = teamId;
+            }
+        }
+
+        public void RemoveFromTeam()
+        {
+            TeamId = null;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Core.Context
             modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Event>().HasOne<User>().WithMany().HasForeignKey(x => x.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Event>().HasOne<Club>().WithMany().HasForeignKey(x => x.OpponentClubId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Team>().HasOne<Club>().WithMany().HasForeignKey(x => x.ClubId).OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<User> Users => Set<User>();
@@ -33,5 +34,7 @@ namespace Core.Context
         public DbSet<EventResponse> EventResponses => Set<EventResponse>();
 
         public DbSet<Location> Locations => Set<Location>();
+
+        public DbSet<Team> Teams => Set<Team>();
     }
 }
