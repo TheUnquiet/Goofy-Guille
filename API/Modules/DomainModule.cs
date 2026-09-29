@@ -26,6 +26,7 @@ namespace API.Modules
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IMapper<Core.Entities.Team, Models.Team>, TeamMapper>();
             services.AddScoped<IMapper<Models.Team, Core.Entities.Team>, TeamMapper>();
+            services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
         }
     }
 }
