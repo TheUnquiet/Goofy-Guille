@@ -12,6 +12,7 @@
             user.ChangeDisplayName(source.DisplayName);
 
             if (source.ClubId.HasValue) user.AssignToClub(source.ClubId.Value);
+            if (source.TeamId.HasValue) user.AssignToTeam(source.TeamId.Value);
             if (source.IsAdmin) user.PromoteToAdmin();
             return user;
         }
@@ -24,6 +25,7 @@
                 Email = source.Email,
                 DisplayName = source.DisplayName,
                 ClubId = source.ClubId,
+                TeamId = source.TeamId,
                 IsAdmin = source.IsAdmin
             };
 

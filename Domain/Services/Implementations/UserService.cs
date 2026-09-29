@@ -9,12 +9,14 @@ namespace Domain.Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepo _userRepo;
+        private readonly ITeamRepo _teamRepo;
         private readonly IMapper<Core.Entities.User, User> _toDomainMapper;
         private readonly IMapper<User, Core.Entities.User> _toEntityMapper;
 
-        public UserService(IUserRepo userRepo, IMapper<Core.Entities.User, User> toDomainMapper, IMapper<User, Core.Entities.User> toEntityMapper)
+        public UserService(IUserRepo userRepo, ITeamRepo teamRepo, IMapper<Core.Entities.User, User> toDomainMapper, IMapper<User, Core.Entities.User> toEntityMapper)
         {
             _userRepo = userRepo;
+            _teamRepo = teamRepo;
             _toDomainMapper = toDomainMapper;
             _toEntityMapper = toEntityMapper;
         }
@@ -48,9 +50,18 @@ namespace Domain.Services.Implementations
         {
             var existingUser = await _userRepo.GetByIdAsync(user.Id) ?? throw new NotFoundException($"User with ID '{user.Id}' was not found.");
 
+            if (existingUser is null) throw new NotFoundException($"User with ID {user.Id} was not found");
+            if (user.TeamId.HasValue)
+            {
+                var team = await _teamRepo.GetByUserIdAsync(user.TeamId.Value);
+                if (team is null) throw new NotFoundException($"Team with ID {user.TeamId} was not found");
+                if (!user.ClubId.HasValue || team.ClubId != user.ClubId.Value) throw new ValidationException("The selcted team does not belong to the user's club");
+            }
+
             existingUser.Email = user.Email;
             existingUser.DisplayName = user.DisplayName;
             existingUser.ClubId = user.ClubId;
+            existingUser.TeamId = user.TeamId;
             existingUser.IsAdmin = user.IsAdmin;
 
             await _userRepo.UpdateAsync(existingUser);
