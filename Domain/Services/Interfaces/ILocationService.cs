@@ -2,11 +2,8 @@ using Domain.Models;
 
 namespace Domain.Services.Interfaces
 {
-    public interface ILocationService
+    public interface ILocationService : IGenericService<Location, Core.Entities.Location>
     {
-        Task<Location> GetByIdAsync(Guid id);
         Task<List<Location>> GetAllAsync();
-        Task<Location> CreateAsync(Location location);
-        Task<Location> UpdateAsync(Location location);
     }
 }

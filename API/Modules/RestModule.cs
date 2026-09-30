@@ -19,6 +19,9 @@ namespace API.Modules
             services.AddScoped<IMapper<Club, ClubDto>, ClubMapper>();
             services.AddScoped<IMapper<CreateClubDto, Club>, ClubMapper>();
             services.AddScoped<IMapper<UpdateClubDto, Club>, ClubMapper>();
+            services.AddScoped<IMapper<Location, LocationDto>, LocationMapper>();
+            services.AddScoped<IMapper<CreateLocationDto, Location>, LocationMapper>();
+            services.AddScoped<IMapper<UpdateLocationDto, Location>, LocationMapper>();
         }
     }
 }
