@@ -25,7 +25,11 @@ namespace REST.Controller
         }
 
         [HttpGet("{id:guid}")]
-        public async 
+        public async Task<ActionResult<TDto>> GetById(Guid id)
+        {
+            var model = await _service.GetByIdAsync(id);
+            return Ok(_toDtoMapper.Map(model));
+        }
 
         [HttpPost]
         public async Task<ActionResult<TDto>> Create(TCreateDto dto)
@@ -41,6 +45,13 @@ namespace REST.Controller
             var model = updateMapper.Map(dto);
             var updatedModel = await _service.UpdateAsync(model);
             return Ok(_toDtoMapper.Map(updatedModel));
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
         }
     }
 }
