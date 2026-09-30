@@ -2,11 +2,8 @@ using Domain.Models;
 
 namespace Domain.Services.Interfaces
 {
-    public interface IClubService
+    public interface IClubService : IGenericService<Club, Core.Entities.Club>
     {
-        Task<Club> GetByIdAsync(Guid id);
         Task<List<Club>> GetAllAsync();
-        Task<Club> CreateAsync(Club club);
-        Task<Club> UpdateAsync(Club club);
     }
 }

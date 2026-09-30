@@ -1,4 +1,4 @@
-namespace REST.Controller
+namespace REST.Controllers
 {
     [ApiController]
     public abstract class GenericController<TModel, TEntity, TDto, TCreateDto, TUpdateDto> : ControllerBase
