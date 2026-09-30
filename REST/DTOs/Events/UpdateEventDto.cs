@@ -1,0 +1,17 @@
+using CORe.Enums;
+
+namespace REST.DTOs.Events
+{
+    public class UpdateEventDto
+    {
+        public Guid Id { get; set; }
+        public Guid ClubId { get; set; }
+        public Guid CreatedByUserId { get; set; }
+        public EventYpe Type { get; set; }
+        public string? Description { get; set; }
+        public Guid ClubId { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public Guid? OpponentClubId { get; set; }
+    }
+}
