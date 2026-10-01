@@ -14,7 +14,7 @@ namespace Core.Entities
 
         public string? Description { get; set; }
 
-        public string Location { get; set; } = string.Empty;
+        public Guid LocationId { get; set; }
 
         public DateTime StartTime { get; set; }
 

@@ -12,12 +12,15 @@ namespace REST.Controllers
         private readonly IClubService _clubService;
         private readonly IMapper<Club, ClubDto> _toDtoMapper;
 
-        public ClubController(IClubService clubService, IMapper<Club, ClubDto> toDtoMapper,
-            IMapper<CreateClubDto, Club> createMapper, IMapper<UpdateClubDto, Club> UpdateClubDto)
+        public ClubController(
+            IClubService clubService,
+            IMapper<Club, ClubDto> toDtoMapper,
+            IMapper<CreateClubDto, Club> createMapper,
+            IMapper<UpdateClubDto, Club> updateMapper)
             : base(clubService, toDtoMapper, createMapper, updateMapper)
         {
             _clubService = clubService;
-            _toDtoMapper = toDtoMapper,
+            _toDtoMapper = toDtoMapper;
         }
 
         [HttpGet]

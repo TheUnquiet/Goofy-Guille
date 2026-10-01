@@ -18,7 +18,6 @@ namespace REST.Mappers
         public Club Map(CreateClubDto source)
         {
             var club = new Club();
-            club.SetId(source.Id);
             club.ChangeName(source.Name);
             return club;
         }

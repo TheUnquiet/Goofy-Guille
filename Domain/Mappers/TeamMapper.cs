@@ -20,8 +20,8 @@ namespace Domain.Mappers
         {
             return new Core.Entities.Team
             {
-                Id = source.Id;
-                ClubId = source.clubId;
+                Id = source.Id,
+                ClubId = source.ClubId,
                 Name = source.Name,
                 Color = source.Color,
                 Description = source.Description

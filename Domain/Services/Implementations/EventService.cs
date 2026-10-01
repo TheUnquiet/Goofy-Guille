@@ -1,3 +1,10 @@
+using Core.Enums;
+using Core.Repositories.Interfaces;
+using Domain.Exceptions;
+using Domain.Mappers;
+using Domain.Models;
+using Domain.Services.Interfaces;
+
 namespace Domain.Services.Implementations
 {
     public class EventService : GenericService<Event, Core.Entities.Event>, IEventService

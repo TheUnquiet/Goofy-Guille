@@ -1,6 +1,7 @@
 using Domain.Exceptions;
 using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace REST.Middleware
 {

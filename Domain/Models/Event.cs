@@ -1,3 +1,6 @@
+using Core.Enums;
+using Domain.Exceptions;
+
 namespace Domain.Models
 {
     public class Event
@@ -54,12 +57,6 @@ namespace Domain.Models
             if (endTime <= startTime) throw new ValidationException("End time must be after start time");
             StartTime = startTime;
             EndTime = endTime;
-        }
-
-        public void SetLocation(Guid locationId)
-        {
-            if (locationId == Guid.Empty) throw new ValidationException("Location ID is required");
-            LocationId = locationId;
         }
 
         public void SetOpponentClub(Guid? opponentClubId)

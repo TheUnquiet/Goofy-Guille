@@ -1,11 +1,15 @@
+using Domain.Mappers;
 using Domain.Models;
 using REST.DTOs.Teams;
 
 namespace REST.Mappers
 {
-    public class TeamMapper : IMapper<Models.Team, TeamDto>, IMapper<CreateTeamDto, Models.Team>, IMapper<UpdateTeamDto, Models.Team>
+    public class TeamMapper :
+        IMapper<Team, TeamDto>,
+        IMapper<CreateTeamDto, Team>,
+        IMapper<UpdateTeamDto, Team>
     {
-        public TeamDto Map(Models.Team source)
+        public TeamDto Map(Team source)
         {
             return new TeamDto
             {
@@ -17,24 +21,28 @@ namespace REST.Mappers
             };
         }
 
-        public Models.Team Map(CreateTeamDTo source)
+        public Team Map(CreateTeamDto source)
         {
             var team = new Team();
+
             team.SetClub(source.ClubId);
             team.ChangeName(source.Name);
             team.ChangeColor(source.Color);
             team.ChangeDescription(source.Description);
+
             return team;
         }
 
-        public Models.Team Map(UpdateTeamDto source)
+        public Team Map(UpdateTeamDto source)
         {
-            var team = new Models.Team();
+            var team = new Team();
+
             team.SetId(source.Id);
             team.SetClub(source.ClubId);
-            team.SetClub(source.Name);
+            team.ChangeName(source.Name);
             team.ChangeColor(source.Color);
             team.ChangeDescription(source.Description);
+
             return team;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Core.Repositories.Interfaces;
 using Domain.Mappers;
 using Domain.Models;
-using Domain.Services.Exceptions;
+using Domain.Exceptions;
 using Domain.Services.Interfaces;
 
 namespace Domain.Services.Implementations
@@ -48,13 +48,10 @@ namespace Domain.Services.Implementations
 
         public async Task<User> UpdateAsync(User user)
         {
-            var existingUser = await _userRepo.GetByIdAsync(user.Id) ?? throw new NotFoundException($"User with ID '{user.Id}' was not found.");
-
-            if (existingUser is null) throw new NotFoundException($"User with ID {user.Id} was not found");
+            var existingUser = (await _userRepo.GetByIdAsync(user.Id) ?? throw new NotFoundException($"User with ID '{user.Id}' was not found.")) ?? throw new NotFoundException($"User with ID {user.Id} was not found");
             if (user.TeamId.HasValue)
             {
-                var team = await _teamRepo.GetByUserIdAsync(user.TeamId.Value);
-                if (team is null) throw new NotFoundException($"Team with ID {user.TeamId} was not found");
+                var team = await _teamRepo.GetByIdAsync(user.TeamId.Value) ?? throw new NotFoundException($"Team with ID {user.TeamId} was not found");
                 if (!user.ClubId.HasValue || team.ClubId != user.ClubId.Value) throw new ValidationException("The selcted team does not belong to the user's club");
             }
 

@@ -28,7 +28,7 @@ namespace Domain.Models
             Name = name;
         }
 
-        public void ChangeDescription(string description)
+        public void ChangeDescription(string? description)
         {
             Description = description;
         }

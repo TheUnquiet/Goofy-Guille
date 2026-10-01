@@ -1,7 +1,8 @@
 using Core.Repositories.Interfaces;
 using Domain.Mappers;
 using Domain.Exceptions;
-using Domain.Services.Implementations;
+using Domain.Services.Interfaces;
+using Domain.Models;
 
 namespace Domain.Services.Implementations
 {

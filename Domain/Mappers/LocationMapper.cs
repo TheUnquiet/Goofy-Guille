@@ -25,7 +25,7 @@ namespace Domain.Mappers
                 Street = source.Street,
                 StreetNumber = source.StreetNumber,
                 PostalCode = source.PostalCode,
-                City = source.City;
+                City = source.City
             };
         }
     }

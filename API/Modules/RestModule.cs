@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using REST.Mappers;
+using Domain.Mappers;
 using Domain.Models;
-using REST.DTOs.Teams;
 using REST.DTOs.Clubs;
+using REST.DTOs.Locations;
+using REST.DTOs.Teams;
 
 namespace API.Modules
 {
@@ -10,18 +10,18 @@ namespace API.Modules
     {
         public void Register(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IMapper<Domain.Models.Team, TeamDto>, TeamMapper>();
-            services.AddScoped<IMapper<CreateTeamDto, Domain.Models.Team>, TeamMapper>();
-            services.AddScoped<IMapper<UpdateTeamDto, Domain.Models.Team>, TeamMapper>();
-            services.AddScoped<IMapper<Team, TeamDto>, TeamMapper>();
-            services.AddScoped<IMapper<CreateTeamDto, Team>, TeamMapper>();
-            services.AddScoped<IMapper<UpdateTeamDto, Team>, TeamMapper>();
-            services.AddScoped<IMapper<Club, ClubDto>, ClubMapper>();
-            services.AddScoped<IMapper<CreateClubDto, Club>, ClubMapper>();
-            services.AddScoped<IMapper<UpdateClubDto, Club>, ClubMapper>();
-            services.AddScoped<IMapper<Location, LocationDto>, LocationMapper>();
-            services.AddScoped<IMapper<CreateLocationDto, Location>, LocationMapper>();
-            services.AddScoped<IMapper<UpdateLocationDto, Location>, LocationMapper>();
+            services.AddScoped<IMapper<Domain.Models.Team, TeamDto>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<CreateTeamDto, Domain.Models.Team>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<UpdateTeamDto, Domain.Models.Team>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<Team, TeamDto>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<CreateTeamDto, Team>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<UpdateTeamDto, Team>, REST.Mappers.TeamMapper>();
+            services.AddScoped<IMapper<Club, ClubDto>, REST.Mappers.ClubMapper>();
+            services.AddScoped<IMapper<CreateClubDto, Club>, REST.Mappers.ClubMapper>();
+            services.AddScoped<IMapper<UpdateClubDto, Club>, REST.Mappers.ClubMapper>();
+            services.AddScoped<IMapper<Location, LocationDto>, REST.Mappers.LocationMapper>();
+            services.AddScoped<IMapper<CreateLocationDto, Location>, REST.Mappers.LocationMapper>();
+            services.AddScoped<IMapper<UpdateLocationDto, Location>, REST.Mappers.LocationMapper>();
         }
     }
 }

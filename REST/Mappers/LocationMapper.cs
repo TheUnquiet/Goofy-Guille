@@ -4,7 +4,8 @@ using REST.DTOs.Locations;
 
 namespace REST.Mappers
 {
-    public class LocationMapper : IMapper<Location, LocationDto>,
+    public class LocationMapper :
+        IMapper<Location, LocationDto>,
         IMapper<CreateLocationDto, Location>,
         IMapper<UpdateLocationDto, Location>
     {
@@ -25,15 +26,16 @@ namespace REST.Mappers
         {
             var location = new Location();
             location.ChangeName(source.Name);
-            location.ChangeAddress(source.Street, source..StreetNumber, source.PostalCode, source.City);
+            location.ChangeAddress(source.Street, source.StreetNumber, source.PostalCode, source.City);
             return location;
         }
 
         public Location Map(UpdateLocationDto source)
         {
             var location = new Location();
+            location.SetId(source.Id);
             location.ChangeName(source.Name);
-            location.ChangeAddress(source.Street, source..StreetNumber, source.PostalCode, source.City);
+            location.ChangeAddress(source.Street, source.StreetNumber, source.PostalCode, source.City);
             return location;
         }
     }

@@ -1,8 +1,7 @@
 using Core.Enums;
 using Core.Repositories.Interfaces;
 using Domain.Mappers;
-using Domain.Models;
-using Domain.Services.Exceptions;
+using Domain.Exceptions;
 using Domain.Services.Interfaces;
 
 namespace Domain.Services.Implementations
@@ -28,7 +27,7 @@ namespace Domain.Services.Implementations
         public async Task<Models.EventResponse?> GetAsync(Guid eventId, Guid userId)
         {
             var response = await _responseRepo.GetAsync(eventId, userId);
-            return response is null ? null : _toDomainMapper.Map(respondRepo);
+            return response is null ? null : _toDomainMapper.Map(response);
         }
 
         public async Task<List<Models.EventResponse>> GetByEventIdAsync(Guid eventId)
@@ -43,14 +42,14 @@ namespace Domain.Services.Implementations
             return responses.Select(_toDomainMapper.Map).ToList();
         }
 
-        public async Task RespondAsync(Guid eventId, Guid userId, Models.EventResponseStatus status)
+        public async Task RespondAsync(Guid eventId, Guid userId, EventResponseStatus status)
         {
             var @event = await _eventRepo.GetByIdAsync(eventId);
             if (@event is null) throw new NotFoundException($"Event with ID {eventId} was not found");
             var user = await _userRepo.GetByIdAsync(userId);
-            if (user is null) throw new NotFoundException($"User with ID {userId} wa not found");
-            if (user.ClubID ! @event.ClubID) throw new UnauthorizedException("User does not belong to event club");
-            if (status == EventResponseStatus.Pending) throw new ValidationException("A response ust be Accepted or Rejected");
+            if (user is null) throw new NotFoundException($"User with ID {userId} was not found");
+            if (user.ClubId != @event.ClubId) throw new UnauthorizedException("User does not belong to event club");
+            if (status == EventResponseStatus.Pending) throw new ValidationException("A response must be Accepted or Rejected");
             var existingResponse = await _responseRepo.GetAsync(eventId, userId);
             if (existingResponse is null)
             {
@@ -58,7 +57,7 @@ namespace Domain.Services.Implementations
                 response.SetEventId(eventId);
                 response.SetUserId(userId);
                 response.SetStatus(status);
-                var entity = _toEntityMapper.Map(entity);
+                var entity = _toEntityMapper.Map(response);
                 await _responseRepo.AddAsync(entity);
             } else {
                 existingResponse.Status = status;

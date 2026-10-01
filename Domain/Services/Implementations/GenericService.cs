@@ -1,3 +1,8 @@
+using Core.Repositories.Interfaces;
+using Domain.Exceptions;
+using Domain.Mappers;
+using Domain.Services.Interfaces;
+
 namespace Domain.Services.Implementations
 {
     public class GenericService<TModel, TEntity> : IGenericService<TModel, TEntity>
@@ -22,7 +27,15 @@ namespace Domain.Services.Implementations
             return _toDomainMapper.Map(entity);
         }
 
-        public async Task<TModel> UpdateAsync(TModel model)
+        public virtual async Task<TModel> CreateAsync(TModel model)
+        {
+            var entity = _toEntityMapper.Map(model);
+            await _repo.AddAsync(entity);
+            await _repo.SaveChangesAsync();
+            return model;
+        }
+
+        public virtual async Task<TModel> UpdateAsync(TModel model)
         {
             var entity = _toEntityMapper.Map(model);
             var existingEntity = await _repo.GetByIdAsync(GetId(model));

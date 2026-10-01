@@ -13,8 +13,12 @@ namespace REST.Controllers
         private readonly ILocationService _locationService;
         private readonly IMapper<Location, LocationDto> _toDtoMapper;
 
-        public LocationController(ILocationService locationService, IMapper<Location, LocationDto> toDtoMapper, 
-            IMapper<CreateLocationDto, Location> createMapper, IMapper<UpdateLocationDto, Location> updateMapper)
+        public LocationController(
+            ILocationService locationService,
+            IMapper<Location, LocationDto> toDtoMapper,
+            IMapper<CreateLocationDto, Location> createMapper,
+            IMapper<UpdateLocationDto, Location> updateMapper)
+            : base(locationService, toDtoMapper, createMapper, updateMapper)
         {
             _locationService = locationService;
             _toDtoMapper = toDtoMapper;

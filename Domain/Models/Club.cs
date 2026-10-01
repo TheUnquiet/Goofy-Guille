@@ -1,4 +1,4 @@
-﻿using Domain.Services.Exceptions;
+﻿using Domain.Exceptions;
 
 namespace Domain.Models
 {

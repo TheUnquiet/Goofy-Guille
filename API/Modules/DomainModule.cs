@@ -18,14 +18,14 @@ namespace API.Modules
             services.AddScoped<IMapper<Core.Entities.Location, Domain.Models.Location>, LocationMapper>();
             services.AddScoped<IMapper<Domain.Models.Location, Core.Entities.Location>, LocationMapper>();
             services.AddScoped<IEventService, EventService>();
-            services.AddScoped<IMapper<Core.Entities.Event, Models.Event>, EventMapper>();
-            services.AddScoped<IMapper<Models.Event, Core.Entities.Event>, EventMapper>();
+            services.AddScoped<IMapper<Core.Entities.Event, Domain.Models.Event>, EventMapper>();
+            services.AddScoped<IMapper<Domain.Models.Event, Core.Entities.Event>, EventMapper>();
             services.AddScoped<IEventResponseService, EventResponseService>();
-            services.AddScoped<IMapper<Core.Entities.EventResponse, Models.EventResponse>, EventResponseMapper>();
-            services.AddScoped<IMapper<Models.EventResponse, Core.Entities.EventResponse>, EventResponseMapper>();
+            services.AddScoped<IMapper<Core.Entities.EventResponse, Domain.Models.EventResponse>, EventResponseMapper>();
+            services.AddScoped<IMapper<Domain.Models.EventResponse, Core.Entities.EventResponse>, EventResponseMapper>();
             services.AddScoped<ITeamService, TeamService>();
-            services.AddScoped<IMapper<Core.Entities.Team, Models.Team>, TeamMapper>();
-            services.AddScoped<IMapper<Models.Team, Core.Entities.Team>, TeamMapper>();
+            services.AddScoped<IMapper<Core.Entities.Team, Domain.Models.Team>, TeamMapper>();
+            services.AddScoped<IMapper<Domain.Models.Team, Core.Entities.Team>, TeamMapper>();
             services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
         }
     }
