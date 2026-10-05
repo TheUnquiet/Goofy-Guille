@@ -13,6 +13,7 @@ namespace Domain.Mappers
             team.SetClub(source.ClubId);
             team.ChangeName(source.Name);
             team.ChangeDescription(source.Description);
+            team.ChangeColor(source.Color);
             return team;
         }
 
