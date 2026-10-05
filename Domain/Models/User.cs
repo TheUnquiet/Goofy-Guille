@@ -38,6 +38,7 @@ namespace Domain.Models
         public void RemoveFromClub()
         {
             ClubId = null;
+            TeamId = null;
         }
 
         public void PromoteToAdmin()
@@ -52,11 +53,9 @@ namespace Domain.Models
 
         public void AssignToTeam(Guid teamId)
         {
-            if (teamId == Guid.Empty)
-            {
-                if (teamId == Guid.Empty) throw new ValidationException("Team ID is required");
-                TeamId = teamId;
-            }
+            if (teamId == Guid.Empty) throw new ValidationException("Team ID is required");
+            TeamId = teamId;
+
         }
 
         public void RemoveFromTeam()

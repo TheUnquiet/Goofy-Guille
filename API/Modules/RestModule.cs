@@ -3,6 +3,7 @@ using Domain.Models;
 using REST.DTOs.Clubs;
 using REST.DTOs.Locations;
 using REST.DTOs.Teams;
+using REST.DTOs.Events;
 
 namespace API.Modules
 {
@@ -22,6 +23,9 @@ namespace API.Modules
             services.AddScoped<IMapper<Location, LocationDto>, REST.Mappers.LocationMapper>();
             services.AddScoped<IMapper<CreateLocationDto, Location>, REST.Mappers.LocationMapper>();
             services.AddScoped<IMapper<UpdateLocationDto, Location>, REST.Mappers.LocationMapper>();
+            services.AddScoped<IMapper<Event, EventDto>, REST.Mappers.EventMapper>();
+            services.AddScoped<IMapper<CreateEventDto, Event>, REST.Mappers.EventMapper>();
+            services.AddScoped<IMapper<UpdateEventDto, Event>, REST.Mappers.EventMapper>();
         }
     }
 }

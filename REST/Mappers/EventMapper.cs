@@ -6,7 +6,7 @@ namespace REST.Mappers
 {
     public class EventMapper : 
         IMapper<Event, EventDto>,
-        IMapper<CreateEventDTo, Event>,
+        IMapper<CreateEventDto, Event>,
         IMapper<UpdateEventDto, Event>
     {
         public EventDto Map(Event source)
@@ -25,7 +25,7 @@ namespace REST.Mappers
             };
         }
 
-        public Event Map(CreateEventDTo source)
+        public Event Map(CreateEventDto source)
         {
             throw new NotImplementedException();
         }

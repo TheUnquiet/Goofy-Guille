@@ -16,7 +16,7 @@ namespace Domain.Mappers
             @event.ChangeDescription(source.Description);
             @event.SetLocation(source.LocationId);
             @event.SetTime(source.StartTime, source.EndTime);
-            if (source.OpponentClubId.HasValue) @event.SetOpponentClub(source.OpponentClubId.Value);
+            @event.SetOpponentClub(source.OpponentClubId);
             return @event;
         }
 

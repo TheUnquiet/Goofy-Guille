@@ -32,8 +32,9 @@ namespace REST.Middleware
             {
                 await HandleExceptionAsync(context, HttpStatusCode.Unauthorized, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, "Something went wrong");
             }
         }

@@ -9,6 +9,7 @@ namespace REST.DTOs.Events
         public Guid CreatedByUserId { get; set; }
         public EventType Type { get; set; }
         public string? Description { get; set; }
+        public Guid LocationId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Guid? OpponentClubId { get; set; }

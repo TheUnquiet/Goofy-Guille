@@ -61,12 +61,8 @@ namespace Domain.Models
 
         public void SetOpponentClub(Guid? opponentClubId)
         {
-            if (opponentClubId.HasValue) OpponentClubId = opponentClubId;
-        }
-
-        public void RemoveOpponentClubId()
-        {
-            OpponentClubId = null;
+            if (opponentClubId.HasValue && opponentClubId == Guid.Empty) throw new ValidationException("Opponent club ID is invalid");
+            OpponentClubId = opponentClubId;
         }
     }
 }
