@@ -185,6 +185,9 @@ namespace Core.Migrations
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("TeamId")
                         .HasColumnType("uniqueidentifier");
 

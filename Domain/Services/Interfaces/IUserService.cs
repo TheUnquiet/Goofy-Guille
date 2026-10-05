@@ -1,12 +1,11 @@
+using Core.Enums;
 using Domain.Models;
 
 namespace Domain.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IGenericService<User, Core.Entities.User>
     {
-        Task<User> GetByIdAsync(Guid id);
         Task<User> GetByEmailAsync(string email);
-        Task<User> CreateAsync(User user);
-        Task<User> UpdateAsync(User user);
+        Task<User> AuthenticateAsync(AuthenticationProvider provider, string externalId, string email, string displayName, string? profileImageUrl);
     }
 }

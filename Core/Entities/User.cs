@@ -14,6 +14,8 @@ namespace Core.Entities
 
         public string DisplayName { get; set; } = string.Empty;
 
+        public string? ProfileImageUrl { get; set; }
+
         public bool IsAdmin { get; set; }
 
         public AuthenticationProvider? ExternalProvider { get; set; }

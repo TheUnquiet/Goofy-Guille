@@ -1,4 +1,5 @@
-﻿using Domain.Exceptions;
+﻿using Core.Enums;
+using Domain.Exceptions;
 
 namespace Domain.Models
 {
@@ -7,9 +8,12 @@ namespace Domain.Models
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Email { get; private set; } = string.Empty;
         public string DisplayName { get; private set; } = string.Empty;
+        public string? ProfileImageUrl { get; private set; }
         public Guid? ClubId { get; private set; }
         public Guid? TeamId { get; private set; }
         public bool IsAdmin { get; private set; }
+        public AuthenticationProvider? ExternalProvider { get; private set; }
+        public string? ExternalId { get; private set; }
 
         public void SetId(Guid id)
         {
@@ -61,6 +65,18 @@ namespace Domain.Models
         public void RemoveFromTeam()
         {
             TeamId = null;
+        }
+
+        public void ChangeProfileImage(string? profileImageUrl)
+        {
+            ProfileImageUrl = profileImageUrl;
+        }
+
+        public void SetExternalLogin(AuthenticationProvider provider, string externalId)
+        {
+            if (string.IsNullOrWhiteSpace(externalId)) throw new ValidationException("External ID is required.");
+            ExternalProvider = provider;
+            ExternalId = externalId;
         }
     }
 }
