@@ -35,6 +35,36 @@ function App() {
     }
   }
 
+  async function testJwtAuthentication() {
+    if (!login) {
+      setMessage("Please sign in first.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://localhost:7115/api/TestAuth",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${login.accessToken}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(`JWT test failed: ${response.status}`);
+        return;
+      }
+
+      //setMessage(`JWT works! Authenticated user ID: ${data.userId}`);
+      setMessage(JSON.stringify(data, null, 2));
+    } catch {
+      setMessage("Could not reach protected API endpoint.");
+    }
+  }
+
   return (
     <main>
       <h1>BasketBall Club</h1>
@@ -59,6 +89,7 @@ function App() {
               JWT expires:{" "}
               {new Date(login.expiresAt).toLocaleString()}
           </p>
+          <button onClick={testJwtAuthentication}>Test JWT Authentication</button>
         </section>
       )}
     </main>
