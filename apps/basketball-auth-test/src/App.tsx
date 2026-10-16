@@ -1,6 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import type { LoginResponse } from "./interfaces/LoginResponse";
+import { apiClient } from "./api/ApiClient";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -9,6 +10,7 @@ function App() {
   async function handleGoogleLogin(identityToken: string) {
     setMessage("Signing in..");
     setLogin(null);
+    apiClient.setAccessToken(null);
 
     try {
       const response = await fetch(
@@ -28,7 +30,9 @@ function App() {
         return;
       }
 
-      setLogin(data as LoginResponse);
+      const loginResponse = data as LoginResponse;
+      apiClient.setAccessToken(loginResponse.accessToken);
+      setLogin(loginResponse);
       setMessage("Sign in successfully");
     } catch {
       setMessage("Could not reach API Check that it is running and that its HTTPS certificate is trusted.")
@@ -42,26 +46,15 @@ function App() {
     }
 
     try {
-      const response = await fetch(
-        "https://localhost:7115/api/TestAuth",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${login.accessToken}`,
-          },
-        },
-      );
-
-      const data = await response.json();
-      if (!response.ok) {
-        setMessage(`JWT test failed: ${response.status}`);
-        return;
-      }
-
-      //setMessage(`JWT works! Authenticated user ID: ${data.userId}`);
-      setMessage(JSON.stringify(data, null, 2));
-    } catch {
-      setMessage("Could not reach protected API endpoint.");
+      const data = await apiClient.get<{
+        message: string,
+        userId: string,
+        name: string,
+        role: string,
+      }>("/TestAuth");
+      setMessage(`JWT works! User: ${data.name} (${data.role}), ID: ${data.userId}`,);
+    } catch (error) {
+       setMessage(error instanceof Error ? error.message: "JWT test failed.",);
     }
   }
 
