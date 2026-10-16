@@ -28,7 +28,7 @@ namespace API.Authentication
                     });
             } catch (InvalidJwtException ex)
             {
-                throw new AuthenticationException("The Google identity token is invalid or expired");
+                throw new AuthenticationException("The Google identity token is invalid or expired", ex);
             }
             if (string.IsNullOrWhiteSpace(payload.Subject)) throw new InvalidOperationException("Google token does not contain a subject");
             if (string.IsNullOrWhiteSpace(payload.Email) || payload.EmailVerified != true) throw new InvalidOperationException("Google account must have a verified email.");

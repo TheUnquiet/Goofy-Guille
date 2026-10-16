@@ -23,7 +23,7 @@ namespace API.Authentication
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
         {
-            var identity = await _tokenValidator.ValidateAsync(request.Providor, request.IdentityToken);
+            var identity = await _tokenValidator.ValidateAsync(request.Provider, request.IdentityToken);
             var user = await _userService.AuthenticateAsync(identity.Provider, identity.ExternalId, identity.Email, identity.DisplayName, identity.ProfileImageUrl);
             var (accessToken, expiresAt) = _jwtTokenService.CreateToken(user);
             return new LoginResponseDto

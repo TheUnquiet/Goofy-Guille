@@ -25,6 +25,10 @@ namespace Domain.Services.Implementations
 
             if (existingUser is not null) return _toDomainMapper.Map(existingUser);
 
+            var existingEmail = await _userRepo.GetByEmailAsync(email);
+
+            if (existingEmail is not null) throw new AuthenticationException("An account with this email already exists " + " Please sign in using its linked authentication provider");
+
             var user = new User();
 
             user.ChangeEmail(email);
