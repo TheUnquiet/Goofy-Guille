@@ -1,92 +1,30 @@
-import { GoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
-import type { LoginResponse } from "./interfaces/LoginResponse";
-import { apiClient } from "./api/ApiClient";
+import { useAuth } from "./auth/AuthContext";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [login, setLogin] = useState<LoginResponse | null>(null);
+  const { login, isAuthenticated, logout } = useAuth();
 
-  async function handleGoogleLogin(identityToken: string) {
-    setMessage("Signing in..");
-    setLogin(null);
-    apiClient.setAccessToken(null);
-
-    try {
-      const response = await fetch(
-        "https://localhost:7115/api/Authentication/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({provider: "Google", identityToken}),
-        }
-      );
-
-      const data = await response.json();
-      if (!response.ok) {
-        setMessage(data.message ?? "Sign in failed");
-        return;
-      }
-
-      const loginResponse = data as LoginResponse;
-      apiClient.setAccessToken(loginResponse.accessToken);
-      setLogin(loginResponse);
-      setMessage("Sign in successfully");
-    } catch {
-      setMessage("Could not reach API Check that it is running and that its HTTPS certificate is trusted.")
-    }
-  }
-
-  async function testJwtAuthentication() {
-    if (!login) {
-      setMessage("Please sign in first.");
-      return;
-    }
-
-    try {
-      const data = await apiClient.get<{
-        message: string,
-        userId: string,
-        name: string,
-        role: string,
-      }>("/TestAuth");
-      setMessage(`JWT works! User: ${data.name} (${data.role}), ID: ${data.userId}`,);
-    } catch (error) {
-       setMessage(error instanceof Error ? error.message: "JWT test failed.",);
-    }
+  if (!isAuthenticated || !login) {
+    return <LoginPage />;
   }
 
   return (
-    <main>
-      <h1>BasketBall Club</h1>
-      <p>Sign in with Google</p>
-      <GoogleLogin 
-        onSuccess={(response) => {
-          if (!response.credential) {
-            setMessage("Google did not return a token");
-            return;
-          }
-          void handleGoogleLogin(response.credential);
-        }}
-        onError={() => setMessage("Google sing in failed")}
-      />
-      {message && <p>{message}</p>}
-      {login && (
-        <section>
-          <h2>Welcome, {login.user.displayName}!</h2>
-          <p>Email: {login.user.email}</p>
-          <p>Admin: {login.user.isAdmin ? "Yes" : "No"}</p>
-          <p>
-              JWT expires:{" "}
-              {new Date(login.expiresAt).toLocaleString()}
-          </p>
-          <button onClick={testJwtAuthentication}>Test JWT Authentication</button>
+    <main className="min-h-screen bg-background p-8">
+      <div className="mx-auto max-w-5xl space-y-6">
+        <header className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Welcome, {login.user.displayName}!</h1>
+            <p className="text-muted-foreground">{login.user.isAdmin ? "Administrator" : "Club member"}</p>
+          </div>
+          <button onClick={logout} className="rounded-md border px-4 py-2 text-sm hover:bg-muted">Sign out</button>
+        </header>
+        <section className="rounded-xl font-semibold">
+          <h2 className="text-xl font-semibold">{login.user.isAdmin ? "Admin Dashboard" : "Member Dashboard"}</h2>
+          <p className="mt-2 text-muted-foreground">Your Dashboard will be built here...</p>
         </section>
-      )}
+      </div>
     </main>
-  )
+  );
 }
 
 export default App;
