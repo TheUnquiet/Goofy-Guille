@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import type { AuthContextValue } from "../interfaces/AuthContextValue";
-import type { AuthProviderProps } from "../interfaces/AuthProviderProps";
-import type { LoginResponse } from "../interfaces/LoginResponse";
+import type { AuthProviderProps } from "../interfaces/auth/AuthProviderProps";
+import type { LoginResponse } from "../interfaces/auth/LoginResponse";
 import { apiClient } from "../api/ApiClient";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined,);
