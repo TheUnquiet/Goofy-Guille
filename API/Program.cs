@@ -1,4 +1,5 @@
 using API.Modules;
+using Microsoft.OpenApi.Models;
 using REST.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,35 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
     });
 });
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter your JWT access token."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
