@@ -28,6 +28,18 @@ namespace REST.Controllers
             @event.SetCreatedByUser(GetCurrentUserId());
         }
 
+        [HttpGet("{id:guid}")]
+        public override async Task<ActionResult<EventDto>> GetById(Guid id)
+        {
+            var @event = await _eventService.GetByIdAsync(id);
+            if (User.IsInRole("Admin")) return Ok(_toDtoMapper.Map(@event));
+
+            var userId = GetCurrentUserId();
+            var user = await _userService.GetByIdAsync(userId) ?? throw new Domain.Exceptions.NotFoundException("User not found.");
+            if (user.ClubId != @event.ClubId) return Forbid();
+            return Ok(_toDtoMapper.Map(@event));
+        }
+
         [HttpGet("club/{clubId:guid}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<EventDto>>> GetByClubId(Guid clubId)

@@ -47,7 +47,7 @@ namespace REST.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<TDto>> GetById(Guid id)
+        public virtual async Task<ActionResult<TDto>> GetById(Guid id)
         {
             var model = await _service.GetByIdAsync(id);
             return Ok(_toDtoMapper.Map(model));
