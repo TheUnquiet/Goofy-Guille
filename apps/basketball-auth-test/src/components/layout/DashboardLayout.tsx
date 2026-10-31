@@ -1,10 +1,8 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import type DashboardLayoutProps from "@/interfaces/ui/DashboardLayoutProps ";
+import { Outlet } from "react-router-dom";
 
-export default function DashboardLayout({
-  children,
-}: DashboardLayoutProps) {
+export default function DashboardLayout() {
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -13,7 +11,7 @@ export default function DashboardLayout({
         <Header />
 
         <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
