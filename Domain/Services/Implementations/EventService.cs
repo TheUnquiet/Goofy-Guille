@@ -44,10 +44,10 @@ namespace Domain.Services.Implementations
         {
             var existingEvent = await _eventRepo.GetByIdAsync(@event.Id);
             if (existingEvent is null) throw new NotFoundException($"Event with ID {@event.Id} was not found");
+            @event.SetCreatedByUser(existingEvent.CreatedByUserId);
             await ValidateReferenceAsync(@event);
             if (@event.Type == EventType.Match && !@event.OpponentClubId.HasValue) throw new ValidationException("A match requires an opponent club");
             existingEvent.ClubId = @event.ClubId;
-            existingEvent.CreatedByUserId = @event.CreatedByUserId;
             existingEvent.Type = @event.Type;
             existingEvent.Description = @event.Description;
             existingEvent.LocationId = @event.LocationId;

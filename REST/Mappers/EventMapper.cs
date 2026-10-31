@@ -27,12 +27,27 @@ namespace REST.Mappers
 
         public Event Map(CreateEventDto source)
         {
-            throw new NotImplementedException();
+            var @event = new Event();
+            @event.SetClub(source.ClubId);
+            @event.SetType(source.Type);
+            @event.ChangeDescription(source.Description);
+            @event.SetLocation(source.LocationId);
+            @event.SetTime(source.StartTime, source.EndTime);
+            @event.SetOpponentClub(source.OpponentClubId);
+            return @event;
         }
 
         public Event Map(UpdateEventDto source)
         {
-            throw new NotImplementedException();
+            var @event = new Event();
+            @event.SetId(source.Id);
+            @event.SetClub(source.ClubId);
+            @event.SetType(source.Type);
+            @event.ChangeDescription(source.Description);
+            @event.SetLocation(source.LocationId);
+            @event.SetTime(source.StartTime, source.EndTime);
+            @event.SetOpponentClub(source.OpponentClubId);
+            return @event;
         }
     }
 }

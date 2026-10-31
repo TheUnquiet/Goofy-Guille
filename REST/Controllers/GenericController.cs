@@ -1,5 +1,6 @@
 using Domain.Mappers;
 using Domain.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace REST.Controllers
@@ -32,13 +33,17 @@ namespace REST.Controllers
 
         protected Guid GetCurrentUserId()
         {
-            var userIdClaim = User.FindFirst("UserId")?.Value;
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             if (!Guid.TryParse(userIdClaim, out var userId))
-                throw new UnauthorizedAccessException(
+                throw new Domain.Exceptions.UnauthorizedException(
                     "User ID is missing or invalid.");
 
             return userId;
+        }
+
+        protected virtual void OnCreating(TModel model)
+        {
         }
 
         [HttpGet("{id:guid}")]
@@ -49,15 +54,18 @@ namespace REST.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<TDto>> Create(TCreateDto dto)
         {
             var model = _createMapper.Map(dto);
+            OnCreating(model);
             var createdModel = await _service.CreateAsync(model);
 
             return Ok(_toDtoMapper.Map(createdModel));
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<TDto>> Update(TUpdateDto dto)
         {
             var model = _updateMapper.Map(dto);
@@ -67,6 +75,7 @@ namespace REST.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _service.DeleteAsync(id);
