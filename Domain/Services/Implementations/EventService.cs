@@ -27,6 +27,12 @@ namespace Domain.Services.Implementations
             _locationRepo = locationRepo;
         }
 
+        public async Task<List<Models.Event>> GetAllAsync()
+        {
+            var events = await _eventRepo.GetAllAsync();
+            return events.Select(_toDomainMapper.Map).ToList();
+        }
+
         public async Task<List<Models.Event>> GetByClubIdAsync(Guid clubId)
         {
             var events = await _eventRepo.GetByClubIdAsync(clubId);

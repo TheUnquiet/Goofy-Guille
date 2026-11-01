@@ -11,6 +11,13 @@ namespace Core.Repositories.Implementations
         {
         }
 
+        public async Task<List<Event>> GetAllAsync()
+        {
+            return await dbSet
+                .OrderBy(x => x.StartTime)
+                .ToListAsync();
+        }
+
         public async Task<List<Event>> GetByClubIdAsync(Guid clubId)
         {
             return await dbSet.Where(x => x.ClubId == clubId).ToListAsync();

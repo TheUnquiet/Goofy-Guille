@@ -58,5 +58,13 @@ namespace REST.Controllers
             var events = await _eventService.GetByClubIdAsync(user.ClubId.Value);
             return Ok(events.Select(_toDtoMapper.Map).ToList());
         }
+
+        [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<EventDto>>> GetAllEvents()
+        {
+            var events = await _eventService.GetAllAsync();
+            return Ok(events.Select(_toDtoMapper.Map).ToList());
+        }
     }
 }
