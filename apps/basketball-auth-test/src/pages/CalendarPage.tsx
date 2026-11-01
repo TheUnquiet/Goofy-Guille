@@ -1,20 +1,56 @@
-import { useRef } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import type { CalendarApi } from "@fullcalendar/core";
-
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-
+import type { CalendarApi, EventInput } from "@fullcalendar/core";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/auth/AuthContext";
+import { eventService } from "@/services/EventService";
 
 export default function CalendarPage() {
   const calendarRef = useRef<FullCalendar>(null);
+  const { login } = useAuth();
+  const isAdmin = login?.user.isAdmin ?? false;
+  const [events, setEvents] = useState<EventInput[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadEvents() {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const result = await eventService.getAllEvents(isAdmin);
+
+        if (isActive) {
+          setEvents(result);
+        }
+      } catch (error) {
+        if (isActive) {
+          setError(
+            error instanceof Error
+              ? error.message
+              : "Failed to load events."
+          );
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isAdmin]);
 
   function getCalendar(): CalendarApi | undefined {
     return calendarRef.current?.getApi();
@@ -59,37 +95,34 @@ export default function CalendarPage() {
             </div>
           </div>
 
-          <FullCalendar
-            ref={calendarRef}
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-            ]}
-            initialView="dayGridMonth"
-            headerToolbar={{
-              left: "",
-              center: "title",
-              right: "",
-            }}
-            height="auto"
-            events={[
-              {
-                title: "Training",
-                start: "2026-11-03T18:00:00",
-                end: "2026-11-03T20:00:00",
-                backgroundColor: "#2563eb",
-                borderColor: "#2563eb",
-              },
-              {
-                title: "Match vs Tigers",
-                start: "2026-11-05T19:00:00",
-                end: "2026-11-05T21:00:00",
-                backgroundColor: "#16a34a",
-                borderColor: "#16a34a",
-              },
-            ]}
-          />
+          {isLoading && (
+            <p className="py-8 text-center text-sm text-muted-foreground">
+              Loading events...
+            </p>
+          )}
+
+          {error && (
+            <p className="py-8 text-center text-sm text-destructive">
+              {error}
+            </p>
+          )}
+
+          {!isLoading && !error && (
+            <FullCalendar
+              ref={calendarRef}
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                interactionPlugin,
+              ]}
+              initialView="dayGridMonth"
+              headerToolbar={false}
+              height="auto"
+              events={events}
+              eventDisplay="block"
+              dayMaxEvents={false}
+            />
+          )}
         </CardContent>
       </Card>
     </div>

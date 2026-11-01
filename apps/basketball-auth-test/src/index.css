@@ -180,4 +180,23 @@
   .fc .fc-day-today {
     background: var(--fc-today-bg-color) !important;
   }
+
+  /* Calendar event blocks */
+  .fc .fc-daygrid-event {
+    display: block;
+    width: calc(100% - 8px);
+    margin: 4px;
+    border-radius: 6px;
+    white-space: normal;
+    cursor: pointer;
+  }
+
+  .fc .fc-daygrid-event .fc-event-main {
+    padding: 6px 8px;
+    font-weight: 600;
+  }
+
+  .fc .fc-daygrid-day-events {
+    min-height: 5em;
+  }
 }

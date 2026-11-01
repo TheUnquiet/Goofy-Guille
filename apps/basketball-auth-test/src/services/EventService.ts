@@ -1,19 +1,17 @@
 import type { EventInput } from "@fullcalendar/core";
-
 import { apiClient } from "@/api/ApiClient";
 import type EventDto from "@/interfaces/events/EventDto";
 import { EventType } from "@/interfaces/events/EventDto";
 
 export class EventService {
-  async getMyClubEvents(): Promise<EventInput[]> {
-    const events = await apiClient.get<EventDto[]>("/Event/my-club");
-
+  async getAllEvents(isAdmin: boolean): Promise<EventInput[]> {
+    const endpoint = isAdmin ? "/Event/all" : "/Event/my-club";
+    const events = await apiClient.get<EventDto[]>(endpoint);
     return events.map(this.mapToCalendarEvent);
   }
 
   private mapToCalendarEvent(event: EventDto): EventInput {
     const isMatch = event.type === EventType.Match;
-
     return {
       id: event.id,
       title: isMatch ? "Match" : "Training",
