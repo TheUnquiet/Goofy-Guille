@@ -127,4 +127,57 @@
   html {
     @apply font-sans;
     }
+
+  /* FullCalendar */
+  .fc {
+    --fc-border-color: var(--border);
+    --fc-page-bg-color: var(--card);
+    --fc-neutral-bg-color: var(--muted);
+    --fc-today-bg-color: var(--accent);
+    --fc-button-bg-color: var(--primary);
+    --fc-button-border-color: var(--primary);
+    --fc-button-hover-bg-color: var(--accent);
+    --fc-button-hover-border-color: var(--accent);
+    --fc-button-active-bg-color: var(--accent);
+    --fc-button-active-border-color: var(--accent);
+    color: var(--foreground);
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .fc .fc-button {
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: none;
+  }
+
+  .fc .fc-button-primary:not(:disabled).fc-button-active {
+    color: var(--accent-foreground);
+  }
+
+  .fc .fc-button-primary:focus {
+    box-shadow: none;
+  }
+
+  .fc .fc-daygrid-day-number,
+  .fc .fc-col-header-cell-cushion {
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .fc .fc-event {
+    border: none;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .fc .fc-day-today {
+    background: var(--fc-today-bg-color) !important;
+  }
 }

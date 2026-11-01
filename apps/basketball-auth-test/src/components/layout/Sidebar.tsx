@@ -1,10 +1,12 @@
+import { NavLink } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
 import type NavigationItem from "@/interfaces/ui/NavigationItem";
-import { CalendarDays, LayoutDashboard, MapPin, Shield, Trophy, Users } from "lucide-react";
+import { CalendarDays, LayoutDashboard, MapPin, Shield, Trophy, Users, } from "lucide-react";
 
 export default function Sidebar() {
   const { login } = useAuth();
   const isAdmin = login?.user.isAdmin ?? false;
+
   const navigationItems: NavigationItem[] = [
     {
       title: "Overview",
@@ -14,16 +16,16 @@ export default function Sidebar() {
     {
       title: "Calendar",
       href: "/calendar",
-      icon: CalendarDays
+      icon: CalendarDays,
     },
     ...(isAdmin
       ? [
-        {
-           title: "Clubs",
+          {
+            title: "Clubs",
             href: "/clubs",
             icon: Trophy,
-        },
-         {
+          },
+          {
             title: "Teams",
             href: "/teams",
             icon: Shield,
@@ -38,8 +40,8 @@ export default function Sidebar() {
             href: "/locations",
             icon: MapPin,
           },
-      ]
-    : []),
+        ]
+      : []),
   ];
 
   return (
@@ -59,14 +61,21 @@ export default function Sidebar() {
           const Icon = item.icon;
 
           return (
-            <a
+            <NavLink
               key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              to={item.href}
+              className={({ isActive }) =>
+                [
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                ].join(" ")
+              }
             >
               <Icon className="size-4" />
               {item.title}
-            </a>
+            </NavLink>
           );
         })}
       </nav>
