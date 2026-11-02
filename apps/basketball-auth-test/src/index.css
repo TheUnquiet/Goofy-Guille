@@ -199,4 +199,18 @@
   .fc .fc-daygrid-day-events {
     min-height: 5em;
   }
+
+  .leaflet-container {
+    z-index: 0;
+  }
+
+  .leaflet-container .leaflet-tile-pane img,
+  .leaflet-container .leaflet-marker-pane img,
+  .leaflet-container .leaflet-shadow-pane img,
+  .leaflet-container img.leaflet-image-layer {
+      max-width: none !important;
+      max-height: none !important;
+      width: auto;
+      padding: 0;
+  }
 }

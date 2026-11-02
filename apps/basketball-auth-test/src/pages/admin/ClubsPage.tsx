@@ -4,7 +4,7 @@ import { clubService } from "@/services/ClubService";
 import type { ClubDto } from "@/services/ClubService";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import ClubDialog from "@/components/admin/ClubDialog";
+import ClubDialog from "@/components/clubs/ClubDialog";
 
 export default function ClubsPage() {
   const [clubs, setClubs] = useState<ClubDto[]>([]);

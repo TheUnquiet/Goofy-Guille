@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import CalendarPage from "@/pages/CalendarPage";
 import ClubsPage from "@/pages/admin/ClubsPage";
+import LocationsPage from "@/pages/admin/LocationsPage";
 
 export default function AppRoutes() {
   const { isAuthenticated, login } = useAuth();
@@ -36,6 +37,7 @@ export default function AppRoutes() {
               path="/clubs"
               element={<ClubsPage />}
             />
+            <Route path="locations" element={<LocationsPage />} />
           </Route>
         </Route>
       </Route>
