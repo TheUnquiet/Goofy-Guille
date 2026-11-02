@@ -18,7 +18,9 @@ namespace REST.Mappers
                 Street = source.Street,
                 StreetNumber = source.StreetNumber,
                 PostalCode = source.PostalCode,
-                City = source.City
+                City = source.City,
+                Latitude = source.Latitude,
+                Longitude = source.Longitude,
             };
         }
 
@@ -27,6 +29,7 @@ namespace REST.Mappers
             var location = new Location();
             location.ChangeName(source.Name);
             location.ChangeAddress(source.Street, source.StreetNumber, source.PostalCode, source.City);
+            location.SetCoordinates(source.Latitude, source.Longitude);
             return location;
         }
 
@@ -36,6 +39,7 @@ namespace REST.Mappers
             location.SetId(source.Id);
             location.ChangeName(source.Name);
             location.ChangeAddress(source.Street, source.StreetNumber, source.PostalCode, source.City);
+            location.SetCoordinates(source.Latitude, source.Longitude);
             return location;
         }
     }

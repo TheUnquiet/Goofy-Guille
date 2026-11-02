@@ -13,6 +13,7 @@ namespace Domain.Mappers
             location.SetId(source.Id);
             location.ChangeName(source.Name);
             location.ChangeAddress(source.Street, source.StreetNumber, source.PostalCode, source.City);
+            location.SetCoordinates(source.Latitude, source.Longitude);
             return location;
         }
 
@@ -25,7 +26,9 @@ namespace Domain.Mappers
                 Street = source.Street,
                 StreetNumber = source.StreetNumber,
                 PostalCode = source.PostalCode,
-                City = source.City
+                City = source.City,
+                Latitude = source.Latitude,
+                Longitude = source.Longitude,
             };
         }
     }

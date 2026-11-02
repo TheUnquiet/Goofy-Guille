@@ -10,6 +10,8 @@ namespace Domain.Models
         public string StreetNumber { get; private set; } = string.Empty;
         public string PostalCode { get; private set; } = string.Empty;
         public string City { get; private set; } = string.Empty;
+        public double Latitude { get; private set; }
+        public double Longitude { get; private set; }
 
         public void SetId(Guid id)
         {
@@ -28,12 +30,21 @@ namespace Domain.Models
             if (string.IsNullOrWhiteSpace(street)) throw new ValidationException("Street is required");
             if (string.IsNullOrWhiteSpace(streetNumber)) throw new ValidationException("Street number is required");
             if (string.IsNullOrWhiteSpace(postalCode)) throw new ValidationException("Postal code is required");
-            if (string.IsNullOrWhiteSpace(city)) throw new ValidationException("City numver is required");
+            if (string.IsNullOrWhiteSpace(city)) throw new ValidationException("City is required");
 
             Street = street;
             StreetNumber = streetNumber;
             PostalCode = postalCode;
             City = city;
+        }
+
+        public void SetCoordinates(double latitude, double longitude)
+        {
+            if (latitude < -90 || latitude > 90) throw new ValidationException("Invalid latitude.");
+            if (longitude < -180 || longitude > 180) throw new ValidationException("Invalid longitude.");
+
+            Latitude = latitude;
+            Longitude = longitude;
         }
     }
 }
