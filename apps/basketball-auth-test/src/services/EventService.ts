@@ -49,8 +49,8 @@ export class EventService {
     return {
       id: event.id,
       title: isMatch ? "Match" : "Training",
-      start: event.startTime,
-      end: event.endTime,
+      start: `${event.startTime}Z`,
+      end: `${event.endTime}Z`,
       backgroundColor: clubColor,
       borderColor: clubColor,
       extendedProps: {

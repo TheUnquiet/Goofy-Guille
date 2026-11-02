@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/auth/AuthContext";
 import { eventService } from "@/services/EventService";
+import EventDialog from "@/components/events/EventDialog";
 
 export default function CalendarPage() {
   const calendarRef = useRef<FullCalendar>(null);
@@ -16,6 +17,8 @@ export default function CalendarPage() {
   const [events, setEvents] = useState<EventInput[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -50,7 +53,7 @@ export default function CalendarPage() {
     return () => {
       isActive = false;
     };
-  }, [isAdmin]);
+  }, [isAdmin, refreshKey]);
 
   function getCalendar(): CalendarApi | undefined {
     return calendarRef.current?.getApi();
@@ -58,15 +61,21 @@ export default function CalendarPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">
-          Calendar
-        </h1>
-        <p className="text-muted-foreground">
-          View and manage your club's matches and training sessions.
-        </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Calendar
+          </h1>
+          <p className="text-muted-foreground">
+            View and manage your club's matches and training sessions.
+          </p>
+        </div>
+        {isAdmin && (
+          <Button onClick={() => setIsEventDialogOpen(true)}>
+            + Add event
+          </Button>
+        )}
       </div>
-
       <Card>
         <CardContent className="space-y-4 pt-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -126,7 +135,7 @@ export default function CalendarPage() {
                 minute: "2-digit",
                 hour12: false,
               }}
-
+              timeZone="local"
               slotLabelFormat={{
                 hour: "2-digit",
                 minute: "2-digit",
@@ -136,6 +145,11 @@ export default function CalendarPage() {
           )}
         </CardContent>
       </Card>
+      <EventDialog
+        open={isEventDialogOpen}
+        onOpenChange={setIsEventDialogOpen}
+        onSaved={() => setRefreshKey((current) => current + 1)}
+      />
     </div>
   );
 }
