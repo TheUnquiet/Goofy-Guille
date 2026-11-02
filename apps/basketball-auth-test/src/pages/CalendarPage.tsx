@@ -121,6 +121,17 @@ export default function CalendarPage() {
               events={events}
               eventDisplay="block"
               dayMaxEvents={false}
+              eventTimeFormat={{
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              }}
+
+              slotLabelFormat={{
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              }}
             />
           )}
         </CardContent>
