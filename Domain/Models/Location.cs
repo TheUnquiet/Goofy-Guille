@@ -10,8 +10,8 @@ namespace Domain.Models
         public string StreetNumber { get; private set; } = string.Empty;
         public string PostalCode { get; private set; } = string.Empty;
         public string City { get; private set; } = string.Empty;
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
+        public double? Latitude { get; private set; }
+        public double? Longitude { get; private set; }
 
         public void SetId(Guid id)
         {
@@ -38,7 +38,7 @@ namespace Domain.Models
             City = city;
         }
 
-        public void SetCoordinates(double latitude, double longitude)
+        public void SetCoordinates(double? latitude, double? longitude)
         {
             if (latitude < -90 || latitude > 90) throw new ValidationException("Invalid latitude.");
             if (longitude < -180 || longitude > 180) throw new ValidationException("Invalid longitude.");
