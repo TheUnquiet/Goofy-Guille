@@ -4,7 +4,7 @@ namespace Core.Repositories.Interfaces
     {
         Task<TEntity?> GetByIdAsync(Guid id);
         Task<TEntity> AddAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity existingEntity, TEntity updatedEntity);
         Task DeleteAsync(Guid id);
         Task SaveChangesAsync();
     }

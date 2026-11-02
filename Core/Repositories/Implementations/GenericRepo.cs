@@ -26,10 +26,10 @@ namespace Core.Repositories.Implementations
             return entry.Entity;
         }
 
-        public virtual Task<TEntity> UpdateAsync(TEntity entity)
+        public virtual Task<TEntity> UpdateAsync(TEntity existingEntity, TEntity updatedEntity)
         {
-            var entry = dbSet.Update(entity);
-            return Task.FromResult(entry.Entity);
+            context.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
+            return Task.FromResult(existingEntity);
         }
 
         public virtual async Task DeleteAsync(Guid id)

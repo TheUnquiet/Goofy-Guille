@@ -64,7 +64,6 @@ namespace Domain.Services.Implementations
             existingUser.IsAdmin = user.IsAdmin;
             existingUser.ProfileImageUrl = user.ProfileImageUrl;
 
-            await _userRepo.UpdateAsync(existingUser);
             await _userRepo.SaveChangesAsync();
 
             return user;

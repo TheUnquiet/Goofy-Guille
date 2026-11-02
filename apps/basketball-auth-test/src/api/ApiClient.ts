@@ -19,6 +19,19 @@ export class ApiClient {
     });
   }
 
+  async put<TRequest, TResponse>(endpoint: string, body: TRequest): Promise<TResponse> {
+    return this.request<TResponse>(endpoint, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    });
+  }
+
+  async delete(endpoint: string): Promise<void> {
+    await this.request<void>(endpoint, {
+      method: "DELETE",
+    });
+  }
+
   private async request<T>(endpoint: string, options: RequestInit,): Promise<T> {
     const headers = new Headers(options.headers);
     headers.set("Content-Type", "application/json");

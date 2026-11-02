@@ -37,12 +37,14 @@ namespace Domain.Services.Implementations
 
         public virtual async Task<TModel> UpdateAsync(TModel model)
         {
-            var entity = _toEntityMapper.Map(model);
-            var existingEntity = await _repo.GetByIdAsync(GetId(model));
-            if (existingEntity is null) throw new NotFoundException($"{typeof(TModel).Name} with ID {GetId(model)} was not found");
+            var id = GetId(model);
+            var existingEntity = await _repo.GetByIdAsync(id);
+            if (existingEntity is null) throw new NotFoundException($"{typeof(TModel).Name} with ID {id} was not found");
+            var updatedEntity = _toEntityMapper.Map(model);
 
-            await _repo.UpdateAsync(entity);
+            await _repo.UpdateAsync(existingEntity, updatedEntity);
             await _repo.SaveChangesAsync();
+
             return model;
         }
 

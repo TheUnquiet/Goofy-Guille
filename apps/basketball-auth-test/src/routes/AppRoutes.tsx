@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import CalendarPage from "@/pages/CalendarPage";
+import ClubsPage from "@/pages/admin/ClubsPage";
 
 export default function AppRoutes() {
   const { isAuthenticated, login } = useAuth();
@@ -30,6 +31,12 @@ export default function AppRoutes() {
             path="/calendar"
             element={<CalendarPage />}
           />
+          <Route element={<ProtectedRoute requiredRole="Admin" />}>
+            <Route
+              path="/clubs"
+              element={<ClubsPage />}
+            />
+          </Route>
         </Route>
       </Route>
 

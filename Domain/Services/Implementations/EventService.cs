@@ -60,7 +60,6 @@ namespace Domain.Services.Implementations
             existingEvent.StartTime = @event.StartTime;
             existingEvent.EndTime = @event.EndTime;
             existingEvent.OpponentClubId = @event.OpponentClubId;
-            await _eventRepo.UpdateAsync(existingEvent);
             await _eventRepo.SaveChangesAsync();
             return @event;
         }
